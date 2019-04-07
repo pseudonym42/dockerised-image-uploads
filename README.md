@@ -2,13 +2,12 @@
 
 ## Stack
 
-The stack:
-- Python 3.6
-- Django 2.1
-- PostgreSQL 9.6
-- Celery 4.2
-- RabbitMQ 3
-- DRF 3.9
+*  Python 3.6
+*  Django 2.1
+*  PostgreSQL 9.6
+*  Celery 4.2
+*  RabbitMQ 3
+*  DRF 3.9
 
 ## Implementation
 
@@ -26,10 +25,11 @@ To run the application you will need to have docker and docker-compose installed
 
 The following endpoints are available:
 
-api/images/get/<image_id>?img_format=[jpeg|png]
-api/images/list
-api/images/create
-api_token
+
+    api/images/get/<image_id>?img_format=[jpeg|png]
+    api/images/list
+    api/images/create
+    api_token
 
 See 'How to use API' section for more info
 
@@ -50,7 +50,9 @@ E.g. if you have uploaded image img.png then duplciate image will be created in 
 and vice versa. Duplicates always get created with name <converted_img.[ext]>. File names never
 clash as they stored in app root folder in files dicrectory as:
 
-    /files/user_<user_id>/hash/image
+
+/files/user_<user_id>/hash/image
+
 
 Duplicate images are created by celery workers asynchronously by copying an existing image and
 converting it using imagemagick software.
@@ -60,40 +62,40 @@ has reverse relationship to all child images
 
 ## How to use API
 
-1. First you need to get an access token, use below endpoint
+1) First you need to get an access token, use below endpoint
 
     api_token
 
-2. Now upload one or multiple images
+2) Now upload one or multiple images
 
     api/images/create
 
-   make sure that you set multipart/form-data as Content-Type and use the access toke
-   from step 1.
+    make sure that you set multipart/form-data as Content-Type and use the access toke
+    from step 1.
 
-   For example, if you upload two images "dog.png" and "cat.jpg", you will get:
+    For example, if you upload two images "dog.png" and "cat.jpg", you will get:
 
-    {
-        "40": {
-            "name": "dog.png"
-        },
-        "41": {
-            "name": "cat.jpg"
+        {
+            "40": {
+                "name": "dog.png"
+            },
+            "41": {
+                "name": "cat.jpg"
+            }
         }
-    }
 
     where "40" and "41" are image container IDs which you can use in the next step to download
     an image:
 
-3. Download an image, using below API
+3) Download an image, using below API
 
-    api/images/get/<image_container_id>?img_format=[jpeg|png]
+        api/images/get/<image_container_id>?img_format=[jpeg|png]
 
     image_container_id - is an ID of a image container, see step 2. img_format - query
     parameter is optional and defaults to jpeg. If invalid format requested or image
     with requested format has not been generated yet then corresponding message is returned
 
-4. List images using below API:
+4) List images using below API:
     
     api/images/list
 
@@ -124,12 +126,13 @@ has reverse relationship to all child images
         }
     ]
 
+
 ## How to run
 
 The below command will build and run docker containers, run all the migrations
 and craete a user for you
 
-- run `docker-compose up`
+- `docker-compose up`
 
 You can access admin page on:
 
