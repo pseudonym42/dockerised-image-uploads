@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db_name
+    ports:
+      - "5432"
+
+  web:
+    build: .
+    image: &web web
+    container_name: web
+    volumes:
+      - .:/code
+    ports:
+      - "7771:7771"
+    env_file: &envfile
+      - env.env
+    depends_on:
+      - db
+      - broker
+    command: "make -C /code run"
+
+  broker:
+    image: rabbitmq:3
+    container_name: broker
+    env_file: *envfile
+    ports:
+      - "5672"
+  
+  worker:
+    build: .
+    image: *web
+    container_name: celery_worker
+    restart: "no"
+    env_file: *envfile
+    command: ["celery", "worker", "--app=worker.worker.app", "--concurrency=1", "--hostname=worker@%h", "--loglevel=INFO"]
+    volumes:
+      - .:/code
+    depends_on:
+      - broker

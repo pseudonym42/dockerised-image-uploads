@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+files/
+.vscode
+
+
+# virtualenv
+.venv
+venv/
+ENV/
+
