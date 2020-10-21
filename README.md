@@ -50,9 +50,7 @@ E.g. if you have uploaded image img.png then duplciate image will be created in 
 and vice versa. Duplicates always get created with name <converted_img.[ext]>. File names never
 clash as they stored in app root folder in files dicrectory as:
 
-
-/files/user_<user_id>/hash/image
-
+    /files/user_<user_id>/hash/image
 
 Duplicate images are created by celery workers asynchronously by copying an existing image and
 converting it using imagemagick software.
@@ -64,11 +62,11 @@ has reverse relationship to all child images
 
 1) First you need to get an access token, use below endpoint
 
-    api_token
+        api_token
 
 2) Now upload one or multiple images
 
-    api/images/create
+        api/images/create
 
     make sure that you set multipart/form-data as Content-Type and use the access toke
     from step 1.
@@ -97,10 +95,11 @@ has reverse relationship to all child images
 
 4) List images using below API:
     
-    api/images/list
+        api/images/list
 
     example response:
 
+    ```
     [
         {
             "id": 1,
@@ -125,6 +124,7 @@ has reverse relationship to all child images
             ]
         }
     ]
+    ```
 
 
 ## How to run
@@ -143,8 +143,8 @@ http://0.0.0.0:7771/
 
 You can login to admin portal with the following credentials:
 
-username: admin
-password: Admin555
+    username: admin
+    password: Admin555
 
 ## Todo
 
